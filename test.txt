@@ -1,0 +1,63 @@
+#include <iostream>
+#include <queue>
+#include <string>
+using namespace std;
+
+struct Player {
+    string name;
+    int health;
+
+    Player(string n, int h) : name(n), health(h) {}
+};
+
+int main() {
+    queue<Player> q;
+    int choice;
+
+    while (true) {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Insert Player (Enqueue)\n";
+        cout << "2. Attack (Dequeue or Damage Front Player)\n";
+        cout << "3. Display Queue\n";
+        cout << "4. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            string name;
+            int health;
+            cout << "Enter player name: ";
+            cin >> name;
+            cout << "Enter health: ";
+            cin >> health;
+            q.push(Player(name, health));
+            cout << name << " inserted into queue.\n";
+        } else if (choice == 2) {
+            if (q.empty()) {
+                cout << "Queue is empty! No one to attack.\n";
+            } else {
+                Player front = q.front();
+                q.pop();
+                cout << "Attacked " << front.name << " (was at front of the queue).\n";
+            }
+        } else if (choice == 3) {
+            if (q.empty()) {
+                cout << "Queue is empty.\n";
+            } else {
+                queue<Player> temp = q;
+                cout << "\nCurrent Queue:\n";
+                while (!temp.empty()) {
+                    Player p = temp.front();
+                    cout << "- " << p.name << " (Health: " << p.health << ")\n";
+                    temp.pop();
+                }
+            }
+        } else if (choice == 4) {
+            break;
+        } else {
+            cout << "Invalid choice!\n";
+        }
+    }
+
+    return 0;
+}
